@@ -1,0 +1,65 @@
+model Device {
+  id             Int             @id @default(autoincrement())
+  type           String
+  dtype          String
+  name           String
+  serial         String
+  pivot_length   String
+  endgun_length  String
+  pivot_runtime  String
+  gpm            String
+  eg_gpm         String
+  min_angle      String
+  max_angle      String
+  min_pressure   Int
+  max_pressure   Int
+  lateral        Int
+  num_readings   Int
+  readings       Reading[]
+  centerlocation LatitudeLongitude
+  currentlocation LatitudeLongitude
+}
+
+model Reading {
+  id                Int               @id @default(autoincrement())
+  date              String
+  unit_date         String
+  zone_offset       Int
+  battery           String
+  pnl_volts         String
+  sigstr            String
+  gpsfix            String
+  power             String
+  behind            Int
+  direction         String
+  angle             String
+  endgun            String
+  endgun2           String
+  aux1_in           String
+  aux1_out          String
+  aux2_in           String
+  aux2_out          String
+  speed             String
+  depth             String
+  pressure          String
+  water             String
+  temp1             String
+  rain1             String
+  flow2             String
+  currentlocation   LatitudeLongitude
+  device            Device            @relation(fields: [deviceId], references: [id])
+  deviceId          Int
+}
+
+model LatitudeLongitude {
+  id        Int    @id @default(autoincrement())
+  latitude  Float
+  longitude Float
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  username  String
+  device    Device? @relation(fields: [deviceId], references: [id])
+  deviceId  Int?
+}
